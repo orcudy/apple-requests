@@ -2,16 +2,16 @@ CC=gcc
 CFLAGS=-g
 LDFLAGS=-L/usr/local/lib
 LDLIBS=-lnghttp2 -levent -lssl -lcrypto -levent_openssl
-SRC=libpypush.c http_parser.c
-EXE=pypush
+SRC=apnrequests.c http_parser.c
+EXE=apnrequests
 
 all:
 	$(CC) $(CFLAGS) $(SRC) $(LDFLAGS) $(LDLIBS) -o $(EXE)
 
 lib:
-	gcc -fPIC -c src/pypush.c 
+	gcc -fPIC -c src/apnrequests.c 
 	gcc -fPIC -c src/http_parser.c
-	gcc -shared pypush.o http_parser.o -Wl,-soname,libpypush.so.1 -o libpypush.so.1.0.0 -lnghttp2 -levent -lssl -lcrypto -levent_openssl
+	gcc -shared apnrequests.o http_parser.o -Wl,-soname,libapnrequests.so.1 -o libapnrequests.so.1.0.0 -lnghttp2 -levent -lssl -lcrypto -levent_openssl
 	mkdir build || /bin/true
 	mkdir lib || /bin/true
 	mv *.o build

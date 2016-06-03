@@ -1,9 +1,9 @@
 from ctypes import *
 import json
 
-cdll.LoadLibrary("libpypush.so.1")
-libpypush = CDLL("libpypush.so.1")
-send_apn_notification = libpypush.send_apn_notification
+cdll.LoadLibrary("libapnrequests.so.1")
+libapnrequests = CDLL("libapnrequests.so.1")
+send_apn_notification = libapnrequests.send_apn_notification
 
 class Request:
     def __init__(self, cert_file, priv_key, url="https://api.development.push.apple.com", topic=None):

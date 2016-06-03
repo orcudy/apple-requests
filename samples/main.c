@@ -1,4 +1,4 @@
-#include <apnrequests.h>
+#include <apns.h>
 
 int main(int argc, char **argv) {
   char *cert_file_path = "/srv/www/pypush/pypush/conf/TwoefayAPNCertificate.pem";

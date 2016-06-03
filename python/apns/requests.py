@@ -1,9 +1,5 @@
-from ctypes import *
 import json
-
-cdll.LoadLibrary("libapnrequests.so.1")
-libapnrequests = CDLL("libapnrequests.so.1")
-send_apn_notification = libapnrequests.send_apn_notification
+from . import bridge
 
 class Request:
     def __init__(self, cert_file, priv_key, url="https://api.development.push.apple.com", topic=None):
@@ -27,15 +23,12 @@ class Request:
     def send(self, token, alert, sound=None, data=None):
         payload = self._generate_payload(alert, sound, data)
         sanitized_token = self._sanitize_token(token)
-        if self.topic:
-            topic_header = "apns-topic: " + self.topic
-
-        self.response = send_apn_notification(c_char_p(self.url),
-                                              c_char_p(self.cert_file),
-                                              c_char_p(self.priv_key),
-                                              c_char_p(token),
-                                              c_char_p(self.topic),
-                                              c_char_p(payload))
+        bridge.send_apn_notification(self.url,
+                                     self.cert_file,
+                                     self.priv_key,
+                                     token,
+                                     self.topic,
+                                     payload)
             
 
 

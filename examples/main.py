@@ -1,4 +1,4 @@
-from apns import requests
+from apple_requests import requests
 
 def main():
     cert_file = "/srv/www/pypush/pypush/conf/TwoefayAPNCertificate.pem"

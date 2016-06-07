@@ -1,10 +1,10 @@
 from distutils.core import setup
 
 packages = [
-    'apns',
+    'apple_requests',
 ]
 
-setup(name='apns',
+setup(name='Apple Requests',
       version='0.1.0',
       description='Apple Push Notifications for Humans',
       author='Chris Orcutt',

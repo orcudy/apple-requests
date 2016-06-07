@@ -1,7 +1,7 @@
 from ctypes import *
 
-cdll.LoadLibrary("libapns.so.1")
-libapns = CDLL("libapns.so.1")
+cdll.LoadLibrary("libapple_requests.so.1")
+libapns = CDLL("libapple_requests.so.1")
 
 def send_apn_notification(url, cert_file, priv_key, token, topic, data):
     libapns.send_apn_notification(c_char_p(url),

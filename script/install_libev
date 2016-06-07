@@ -1,6 +1,8 @@
 #!/bin/bash
 
 #libev
+mkdir lib
+cd lib
 wget https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz
 tar xzf libevent-2.0.22-stable.tar.gz
 cd libevent-2.0.22-stable

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+#apnrequests
+make
+make install
+

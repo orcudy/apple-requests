@@ -4,12 +4,12 @@ cdll.LoadLibrary("libapple_requests.so.1")
 libapns = CDLL("libapple_requests.so.1")
 
 def send_apn_notification(url, cert_file, priv_key, token, topic, data):
-    libapns.send_apn_notification(c_char_p(url),
-                                  c_char_p(cert_file),
-                                  c_char_p(priv_key),
-                                  c_char_p(token),
-                                  c_char_p(topic),
-                                  c_char_p(data))
+    libapns.send_apn_notification(c_char_p(str.encode(url)),
+                                  c_char_p(str.encode(cert_file)),
+                                  c_char_p(str.encode(priv_key)),
+                                  c_char_p(str.encode(token)),
+                                  c_char_p(str.encode(topic)),
+                                  c_char_p(str.encode(data)))
 
 
             

@@ -1,24 +1,37 @@
-CC=gcc
-CFLAGS=-g
-LDFLAGS=-L/usr/local/lib
-LDLIBS=-lnghttp2 -levent -lssl -lcrypto -levent_openssl
-SRC=apple_requests.c http_parser.c
-EXE=apple_requests
+CC := gcc
+CFLAGS := -g
+LDFLAGS := -L/usr/local/lib
+LDLIBS := -lnghttp2 -levent -lssl -lcrypto -levent_openssl
 
-all:
-	gcc -fPIC -c src/apple_requests.c
-	gcc -fPIC -c src/http_parser.c
-	gcc -shared apple_requests.o http_parser.o -Wl,-soname,libapple_requests.so.1 -o libapple_requests.so.1.0.0 -lnghttp2 -levent -lssl -lcrypto -levent_openssl
-	mkdir build || /bin/true
-	mkdir lib || /bin/true
-	mv *.o build
-	mv *.so* lib
+SRCDIR := src
+PYTHONDIR := python
+OBJDIR := build
+LIBDIR := lib
 
+SOURCES := $(wildcard $(SRCDIR)/*.c)
+OBJECTS := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+INCLUDES := $(wildcard $(SRCDIR)/*.h)
+TARGET := apple_requests
+REAL := 0.0.0
+SONAME := 0
+
+INSTALLDIR := /usr/local/lib
+INCLUDEDIR := /usr/local/include
+
+all: $(OBJECTS)
+	$(CC) -shared $(OBJECTS) -Wl,-soname,lib$(TARGET).so.$(SONAME) -o lib$(TARGET).so.$(REAL) $(LDFLAGS) $(LDLIBS)
+	mkdir $(LIBDIR) || /bin/true
+	mv *.so* $(LIBDIR)
+
+$(OBJECTS): $(SOURCES)
+	$(CC) $(CFLAGS) -fPIC -c $(SOURCES)
+	mkdir $(OBJDIR) || /bin/true
+	mv *.o $(OBJDIR)
 clean:
-	rm -rf lib || /bin/true
-	rm -rf build || /bin/true
+	rm -rf $(OBJDIR) || /bin/true
+	rm -rf $(LIBDIR) || /bin/true
 
 install:
-	cp lib/libapple_requests.so* /usr/local/lib
-	cp src/apple_requests.h /usr/local/include
-	cd python; python setup.py install
+	cp $(LIBDIR)/lib$(TARGET).so* $(INSTALLDIR)
+	cp $(INCLUDES) $(INCLUDEDIR)
+	cd $(PYTHONDIR); python setup.py install
